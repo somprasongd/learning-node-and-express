@@ -263,6 +263,32 @@ server.use((req, res, next) => {
 });
 ```
 
+#### ใช้ morgan เพื่อเก็บ log แต่ละ request
+
+- ติดตั้ง `npm i -S morgan`
+
+```javascript
+import morgan from 'morgan';
+
+// ...
+const server = express();
+
+server.use(morgan('tiny'));
+// ...
+```
+
+#### More middlewares
+- cors - enable CORS
+- helmet
+- boby-parser - boby parsing middleware
+- multer - middleware for handing multipart/form-data
+- session
+- errorhandler
+- serve-favicon
+- csurf
+- passport
+- merror
+
 ### 3.5 Router
 
 เนื่องจาก Nodejs สามารถสร้างโปรแกรมแบบ Modular ได้ ดังนั้นเราสามารถสร้างไฟล์แยกออกไปใช้ router จัดการกับ method, path ต่างๆ แล้วใช้ middleware โหลดเข้ามา
