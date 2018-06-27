@@ -36,3 +36,23 @@ console.log(`Hello ${name}`);
 ```
 
 - ลองรันจากคำสั่ง `npm start` จะเห็นว่าสามารถใช้งานได้
+
+## Use nodemon
+ใช้เพื่อให้ช่วยรัน node ใหม่ทุกครั้งที่มีการแก้ไขไฟล์
+
+- เริ่มจากติดตั้ง nodemon
+```
+npm i -D nodemon
+```
+
+- แก้ไข start script
+```json
+{
+  "scripts": {
+    "start": "nodemon ./app.js --exec babel-node -e js"
+  }
+}
+```
+
+- รัน `npm start` ใหม่อีกครั้ง
+- ทดลองแก้ไขไฟล์ app.js และบันทึก จะเห็นว่า node จะรันใหม่โดยอัตโนมัติ
