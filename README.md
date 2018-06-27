@@ -262,3 +262,76 @@ server.use((req, res, next) => {
 	next();
 });
 ```
+
+### 3.5 Router
+
+เนื่องจาก Nodejs สามารถสร้างโปรแกรมแบบ Modular ได้ ดังนั้นเราสามารถสร้างไฟล์แยกออกไปใช้ router จัดการกับ method, path ต่างๆ แล้วใช้ middleware โหลดเข้ามา
+
+#### ตัวอย่าง ย้าย route pets ไปสร้างเป็น router แทน
+
+- สร้างไฟล์ src/routes/pets.js
+
+```javascript
+import express from 'express';
+import pets from './../../data/pets.json';
+
+const router = express.Router();
+
+// สามารถใช้งาน middleware เฉพาะ route นี้
+router.use((req, res, next) => {
+  console.log('Time: ', Date.now());
+  next();
+});
+
+router.get('/', (req, res) => {
+  res.json(pets);
+});
+
+router.get(`/:petId`, (req, res) => {
+  const pet = pets.find(pet => {
+    return pet.id === +req.params.petId;
+  });
+  if (!pet) {
+    res.send(`Pet with id ${req.params.petId} not found.`);
+  }
+  res.json(pet);
+});
+
+router.post('/', (req, res) => {
+  console.log('handling POST request...');
+  res.end();
+});
+
+router.patch('/', (req, res) => {
+  console.log('handling PATCH request...');  
+  res.end();
+});
+
+router.put('/', (req, res) => {
+  console.log('handling PUT request...');  
+  res.end();
+});
+
+router.delete('/', (req, res) => {
+  console.log('handling DELETE request...');  
+  res.end();
+});
+
+export default router;
+```
+
+- เรียกใช้ router ใน app.js
+
+```javascript
+import express from 'express';
+import PetRoute from './routes/pets';
+
+// ...
+
+const buildUrl = (version, path) => `/api/${version}/${path}`;
+const PETS_BASE_URL = buildUrl('v1', 'pets');
+
+server.use(PETS_BASE_URL, PetRoute);
+
+// ...
+```
