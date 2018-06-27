@@ -187,3 +187,30 @@ server.delete(PETS_BASE_URL, (req, res) => {
   res.end();
 });
 ```
+
+#### app.route()
+
+กรณีที่มี path เดียวกัน และต้องการทำงานหลาย methods แต่ไม่ใช่ทุก methods (`app.all()`) จะใช้ `app.route()` สร้าง chain ต่อไปเรื่อยๆ เช่น 
+
+```javascript
+server.route(PETS_BASE_URL)
+  .get((req, res) => {
+    res.json(pets);
+  })
+  .post((req, res) => {
+    console.log('handling POST request...');
+    res.end();
+  })
+  .put((req, res) => {
+    console.log('handling PUT request...');
+    res.end();
+  })
+  .patch((req, res) => {
+    console.log('handling PATCH request...');
+    res.end();
+  })
+  .delete((req, res) => {
+    console.log('handling DELETE request...');
+    res.end();
+  });
+```

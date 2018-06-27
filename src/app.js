@@ -13,29 +13,26 @@ server.get('/', (req, res) => {
 const buildUrl = (version, path) => `/api/${version}/${path}`;
 const PETS_BASE_URL = buildUrl('v1', 'pets');
 
-server.get(PETS_BASE_URL, (req, res) => {
-  res.json(pets);
-});
-
-server.post(PETS_BASE_URL, (req, res) => {
-  console.log('handling POST request...');
-  res.end();
-});
-
-server.patch(PETS_BASE_URL, (req, res) => {
-  console.log('handling PATCH request...');  
-  res.end();
-});
-
-server.put(PETS_BASE_URL, (req, res) => {
-  console.log('handling PUT request...');  
-  res.end();
-});
-
-server.delete(PETS_BASE_URL, (req, res) => {
-  console.log('handling DELETE request...');  
-  res.end();
-});
+server.route(PETS_BASE_URL)
+  .get((req, res) => {
+    res.json(pets);
+  })
+  .post((req, res) => {
+    console.log('handling POST request...');
+    res.end();
+  })
+  .put((req, res) => {
+    console.log('handling PUT request...');
+    res.end();
+  })
+  .patch((req, res) => {
+    console.log('handling PATCH request...');
+    res.end();
+  })
+  .delete((req, res) => {
+    console.log('handling DELETE request...');
+    res.end();
+  });
 
 server.listen(PORT, () => {
   console.log(`Server start on port ${PORT}`)
