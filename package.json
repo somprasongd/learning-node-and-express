@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./app.js --exec babel-node -e js",
+    "start": "nodemon bin/dev",
     "clean": "rm -rf dist",
     "build": "npm run clean && mkdir dist && babel src -s -d dist",
-    "serve": "node dist/app.js"
+    "serve": "SET ENV=production && node dist/app.js",
+    "prod": "SET ENV=production && npm run build && node bin/prod"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +17,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
+    "babel-register": "^6.26.0",
     "nodemon": "^1.17.5"
   },
   "dependencies": {
