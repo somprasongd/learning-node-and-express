@@ -139,3 +139,51 @@ server.listen(PORT, () => console.log(`Server start on port ${PORT}`));
 
 - ทดสอบรัน `npm start`
 - ที่ console จะแสดงคำว่า "Server start on port 3000" และเมื่อเปิดผ่าน browser ที่ http://127.0.0.1:3000 จะแสดงว่า "Cannot GET /" แสดงว่าโค้ดทำงานได้ถูกต้อง
+
+### 3.2 Express Route
+เราสามารถใช้ Express จัดการกับ HTTP Request ได้ด้วยการใช้งาน Express route
+- Method GET ใช้สำหรับร้องขอข้อมูล
+```js
+server.get('/', (req, res) => {
+  # แสดงข้อความออกทาง terminal
+  console.log('handling GET request...');
+  # res.send() ใช้ส่งข้อมูลกลับไปยัง client ตามชนิดข้อมูลที่ส่งไป
+  res.send('Hello from Express');
+
+  # แต่ถ้าต้องการส่งข้อมูลที่เป็น json ใช้ res.json() แทนดีกว่า
+  # res.json({name: "Somprasong", nickName: "Ball"});
+});
+```
+
+- Method POST ใช้สำหรับสร้างข้อมูลใหม่
+```javascript
+server.post(PETS_BASE_URL, (req, res) => {
+  console.log('handling POST request...');
+  # ใช้สำหรับส่ง response กลับไปยัง client กรณีไม่ได้ใช้ res.send() หรือ res.json()
+  res.end();
+});
+```
+
+- Method PUT ใช้สำหรับอัพเดทข้อมูล ปกติจะใช้แบบอัพเดททับข้อมูลเดิม
+```javascript
+server.put(PETS_BASE_URL, (req, res) => {
+  console.log('handling PUT request...');
+  res.end();
+});
+```
+
+- Method PUT ใช้สำหรับอัพเดทข้อมูลบางส่วน
+```javascript
+server.patch(PETS_BASE_URL, (req, res) => {
+  console.log('handling PATCH request...');
+  res.end();
+});
+```
+
+- Method DELETE ใช้สำหรับลบข้อมูล
+```javascript
+server.delete(PETS_BASE_URL, (req, res) => {
+  console.log('handling PATCH request...');
+  res.end();
+});
+```
