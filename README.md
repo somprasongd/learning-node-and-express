@@ -56,3 +56,22 @@ npm i -D nodemon
 
 - รัน `npm start` ใหม่อีกครั้ง
 - ทดลองแก้ไขไฟล์ app.js และบันทึก จะเห็นว่า node จะรันใหม่โดยอัตโนมัติ
+
+## Express
+
+### การติดตั้ง
+
+- ใช้คำสั่ง `npm i -S express`
+- สร้าง server ด้วย express
+```js
+import express from 'express'
+
+const PORT = 3000;
+
+const server = express();
+
+server.listen(PORT, () => console.log(`Server start on port ${PORT}`));
+```
+
+- ทดสอบรัน `npm start`
+- ที่ console จะแสดงคำว่า "Server start on port 3000" และเมื่อเปิดผ่าน browser ที่ http://127.0.0.1:3000 จะแสดงว่า "Cannot GET /" แสดงว่าโค้ดทำงานได้ถูกต้อง
