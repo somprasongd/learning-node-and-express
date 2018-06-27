@@ -183,7 +183,7 @@ server.patch(PETS_BASE_URL, (req, res) => {
 - Method DELETE ใช้สำหรับลบข้อมูล
 ```javascript
 server.delete(PETS_BASE_URL, (req, res) => {
-  console.log('handling PATCH request...');
+  console.log('handling DELETE request...');
   res.end();
 });
 ```
