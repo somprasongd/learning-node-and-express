@@ -1,6 +1,6 @@
 # LEARNING NODE AND EXPRESS
 
-## Nodejs & ES6
+## 1. Nodejs & ES6
 ต้องติดตั้ง babel ช่วยในการเขียน ES6 (จริงๆ nodejs เขียน es6 ได้ แต่ยังใช้ import ไม่ได้)
 
 - เริ่มจากติดตั้ง module ตามนี้
@@ -51,7 +51,57 @@ console.log(`Hello ${name}`);
 - สั่ง compile โดย `npm run build`
 - สั่ง run โดย `npm run serve`
 
-## Use nodemon
+### กำหนดเวอร์ชันของ nodejs ที่จะให้ babel complie ออกมา
+ถ้าลองสั่ง `npm run build` แล้วไปดูที่ไฟล์ build/app.js จะพบว่า `const name = 'Somprasong'` จะถูกแปลงไปเป็น `var name = 'Somprasong'` ซึ่งจริงๆ แล้ว node เวอร์ชันใหม่ๆ สามารถใช้งาน `const` ได้แล้ว แต่ที่ได้ออกมาเป็น `var` เพราะว่าเราไม่ได้กำหนดเวอร์ชันของ nodejs ที่ต้องการ ซึ่งมีวิธีดังนี้
+
+- กำหนดที่ env ในไฟล์ .babelrc ดังนี้
+```json
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "10.1"
+      }
+    }],
+    "stage-0"
+  ],
+  "plugins": []
+}
+```
+
+- สั่ง compile โดย `npm run build`
+- ดูในไฟล์ build/app.js ได้เป็น `const name = 'Somprasong'` แล้ว
+
+### สร้าง script สำหรับรัน Development กับ Production
+- ติดตั้ง bebel-register
+```
+npm i -D babel-register
+```
+
+- สร้างไฟล์ bin/dev สำหรับรัน development mode
+```js
+require('babel-register');
+require('./../src/app');
+```
+
+- สร้างไฟล์ bin/prod สำหรับรัน production mode
+```js
+require('./../dist/app');
+```
+
+- แก้ script ที่ไฟล์ package.json ที่ start และเพิ่ม prod
+
+```json
+  "scripts": {
+    "start": "node bin/dev",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && mkdir dist && babel src -s -d dist",
+    "serve": "SET ENV=production && node dist/app.js",
+    "prod": "SET ENV=production && npm run build && node bin/prod"
+  },
+```
+
+## 2. Use nodemon
 ใช้เพื่อให้ช่วยรัน node ใหม่ทุกครั้งที่มีการแก้ไขไฟล์
 
 - เริ่มจากติดตั้ง nodemon
@@ -63,11 +113,12 @@ npm i -D nodemon
 ```json
 {
   "scripts": {
-    "start": "nodemon ./app.js --exec babel-node -e js"
+    "start": "nodemon bin/dev",
   }
 }
 ```
 
 - รัน `npm start` ใหม่อีกครั้ง
 - ทดลองแก้ไขไฟล์ app.js และบันทึก จะเห็นว่า node จะรันใหม่โดยอัตโนมัติ
+
 
