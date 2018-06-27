@@ -5,6 +5,13 @@ const PORT = 3000;
 
 const server = express();
 
+server.use((req, res, next) => {
+	const now = new Date().toString();
+	const log = `${now}: ${req.method} ${req.url}`;
+	console.log(log);
+	next();
+});
+
 server.get('/', (req, res) => {
   console.log('handling GET request...');
   res.send('Hello from Express');

@@ -145,13 +145,13 @@ server.listen(PORT, () => console.log(`Server start on port ${PORT}`));
 - Method GET ใช้สำหรับร้องขอข้อมูล
 ```js
 server.get('/', (req, res) => {
-  # แสดงข้อความออกทาง terminal
+  // แสดงข้อความออกทาง terminal
   console.log('handling GET request...');
-  # res.send() ใช้ส่งข้อมูลกลับไปยัง client ตามชนิดข้อมูลที่ส่งไป
+  // res.send() ใช้ส่งข้อมูลกลับไปยัง client ตามชนิดข้อมูลที่ส่งไป
   res.send('Hello from Express');
 
-  # แต่ถ้าต้องการส่งข้อมูลที่เป็น json ใช้ res.json() แทนดีกว่า
-  # res.json({name: "Somprasong", nickName: "Ball"});
+  // แต่ถ้าต้องการส่งข้อมูลที่เป็น json ใช้ res.json() แทนดีกว่า
+  // res.json({name: "Somprasong", nickName: "Ball"});
 });
 ```
 
@@ -159,7 +159,7 @@ server.get('/', (req, res) => {
 ```javascript
 server.post(PETS_BASE_URL, (req, res) => {
   console.log('handling POST request...');
-  # ใช้สำหรับส่ง response กลับไปยัง client กรณีไม่ได้ใช้ res.send() หรือ res.json()
+  // ใช้สำหรับส่ง response กลับไปยัง client กรณีไม่ได้ใช้ res.send() หรือ res.json()
   res.end();
 });
 ```
@@ -236,4 +236,29 @@ server.get(`${PETS_BASE_URL}/:petId`, (req, res) => {
   res.json(pet);
 });
 
+```
+
+### 3.4 Middleware
+
+Express สามารถสร้าง middleware เพื่อให้ทำงานแบบ FIFO (First-In-First-Out)
+
+```javascript
+// ใช้ server.use() เพื่อสร้าง middleware มันจะทำงานเรียงจากบนลงล่าง
+server.use((req, res, next) => {
+	// req คือ Object ของ HTTP Request
+	// res คือ Object ของ HTTP Response
+	// next คือ เรียกฟังก์ชัน next(); เพื่อไปยัง middleware ตัวถัดไป ถ้าไม่เรียกจะไม่ออกไปจาก middleware ตัวนี้		
+	next();
+});
+```
+
+#### ตัวอย่างสร้าง middleware เพื่อเก็บ log
+
+```javascript
+server.use((req, res, next) => {
+	const now = new Date().toString();
+	const log = `${now}: ${req.method} ${req.url}`;
+	console.log(log);
+	next();
+});
 ```
