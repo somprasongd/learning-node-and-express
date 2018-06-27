@@ -1,2 +1,5 @@
-const name = 'Somprasong';
-console.log(`Hello ${name}`);
+import test from './test';
+
+test();
+
+console.log(`Hello from "${process.env.ENV}" environtment.`);
