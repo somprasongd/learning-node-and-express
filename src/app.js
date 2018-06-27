@@ -1,5 +1,9 @@
-import test from './test';
+import express from 'express';
 
-test();
+const PORT = 3000;
 
-console.log(`Hello from "${process.env.NODE_ENV}" environtment.`);
+const server = express();
+
+server.listen(PORT, () => {
+  console.log(`Server start on port ${PORT}`)
+});
