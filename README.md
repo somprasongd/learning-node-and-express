@@ -1,6 +1,8 @@
 # LEARNING NODE AND EXPRESS
 
-## Nodejs & ES6
+## 1. Nodejs & ES6
+:on: step-001-setup-babel-part-1
+
 ต้องติดตั้ง babel ช่วยในการเขียน ES6 (จริงๆ nodejs เขียน es6 ได้ แต่ยังใช้ import ไม่ได้)
 
 - เริ่มจากติดตั้ง module ตามนี้
@@ -38,6 +40,8 @@ console.log(`Hello ${name}`);
 - ลองรันจากคำสั่ง `npm start` จะเห็นว่าสามารถใช้งานได้
 
 ### การใช้ babel compile เป็น ES5
+:on: step-002-setup-babel-part-2
+
 - แก้ไข scripts ใน package.json โดย build สำหรับ compile และ serve สำหรับรันไฟล์ที่ compile แล้ว
 ```json
  "scripts": {
@@ -100,3 +104,24 @@ require('./../dist/app');
     "prod": "SET ENV=production && npm run build && node bin/prod"
   },
 ```
+## 2. Use nodemon
+:on: step-003-use-nodemon
+
+ใช้เพื่อให้ช่วยรัน node ใหม่ทุกครั้งที่มีการแก้ไขไฟล์
+
+- เริ่มจากติดตั้ง nodemon
+```
+npm i -D nodemon
+```
+
+- แก้ไข start script
+```json
+{
+  "scripts": {
+    "start": "nodemon ./app.js --exec babel-node -e js"
+  }
+}
+```
+
+- รัน `npm start` ใหม่อีกครั้ง
+- ทดลองแก้ไขไฟล์ app.js และบันทึก จะเห็นว่า node จะรันใหม่โดยอัตโนมัติ
