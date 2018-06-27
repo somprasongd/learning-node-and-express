@@ -29,13 +29,27 @@ npm i -D babel-cli babel-preset-env babel-preset-stage-0
 
 ```
 
-- ทดลองสร้างไฟล app.js
+- ทดลองสร้างไฟล src/app.js
 ```javascript
 const name = 'Somprasong';
 console.log(`Hello ${name}`);
 ```
 
 - ลองรันจากคำสั่ง `npm start` จะเห็นว่าสามารถใช้งานได้
+
+### การใช้ babel compile เป็น ES5
+- แก้ไข scripts ใน package.json โดย build สำหรับ compile และ serve สำหรับรันไฟล์ที่ compile แล้ว
+```
+ "scripts": {
+    "start": "nodemon lib/index.js --exec babel-node -e js",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && mkdir dist && babel src -s -d dist", # -s สำหรับสร้าง source map
+    "serve": "node dist/app.js"
+  }
+```
+
+- สั่ง compile โดย `npm run build`
+- สั่ง run โดย `npm run serve`
 
 ## Use nodemon
 ใช้เพื่อให้ช่วยรัน node ใหม่ทุกครั้งที่มีการแก้ไขไฟล์
