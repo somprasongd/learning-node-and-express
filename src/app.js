@@ -1,16 +1,12 @@
 import express from 'express';
+import morgan from 'morgan';
 import pets from './../data/pets.json';
 
 const PORT = 3000;
 
 const server = express();
 
-server.use((req, res, next) => {
-	const now = new Date().toString();
-	const log = `${now}: ${req.method} ${req.url}`;
-	console.log(log);
-	next();
-});
+server.use(morgan('tiny'));
 
 server.get('/', (req, res) => {
   console.log('handling GET request...');

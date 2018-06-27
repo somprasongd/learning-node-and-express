@@ -262,3 +262,29 @@ server.use((req, res, next) => {
 	next();
 });
 ```
+
+#### ใช้ morgan เพื่อเก็บ log แต่ละ request
+
+- ติดตั้ง `npm i -S morgan`
+
+```javascript
+import morgan from 'morgan';
+
+// ...
+const server = express();
+
+server.use(morgan('tiny'));
+// ...
+```
+
+#### More middlewares
+- cors - enable CORS
+- helmet
+- boby-parser - boby parsing middleware
+- multer - middleware for handing multipart/form-data
+- session
+- errorhandler
+- serve-favicon
+- csurf
+- passport
+- merror
