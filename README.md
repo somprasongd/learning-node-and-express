@@ -187,3 +187,25 @@ server.delete(PETS_BASE_URL, (req, res) => {
   res.end();
 });
 ```
+
+### 3.3 Path parameters
+เราสามารถส่ง parameter ไปกับ path ที่เรียกไปได้ โดยใช้ `:paramName` และเรียกใช้งานผ่าน `req.params`
+
+```
+Route path: /api/v1/pets/:petId
+Request URL: http://localhost:3000/api/v1/pets/1
+req.params: { "petId": "1" }
+```
+- จากตัวอย่างข้างบนสามารถเขียนโค้ดได้
+
+```javascript
+server.get(`${PETS_BASE_URL}/:petId`, (req, res) => {
+  const pet = pets.find(pet => {
+    return pet.id.toString() === req.params.petId;
+  });
+  if (!pet) {
+    res.send(`Pet with id ${req.params.petId} not found.`);
+  }
+  res.json(pet);
+});
+```

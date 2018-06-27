@@ -17,6 +17,16 @@ server.get(PETS_BASE_URL, (req, res) => {
   res.json(pets);
 });
 
+server.get(`${PETS_BASE_URL}/:petId`, (req, res) => {
+  const pet = pets.find(pet => {
+    return pet.id === +req.params.petId;
+  });
+  if (!pet) {
+    res.send(`Pet with id ${req.params.petId} not found.`);
+  }
+  res.json(pet);
+});
+
 server.post(PETS_BASE_URL, (req, res) => {
   console.log('handling POST request...');
   res.end();
