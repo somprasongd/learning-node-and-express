@@ -452,3 +452,88 @@ server.get('/', (req, res) => {
 ```
 
 - ทดสอบเรียก [http://localhost:3000](http://localhost:3000)
+
+### 3.9 Template Engines - EJS
+การแสดงหน้าเวบเพจ ปกติข้อมูลมันไม่ได้เป็น static แต่มันจะแสดงข้อมูลแบบ dynamic ดังนั้น จะใช้วิธีทำการสร้าง template เอาไว้ แล้วใช้ res.render('view'); เพื่อ render HTML ไฟล์ และส่งไปกับ response กลับไปยัง browser ซึ่ง Template Engines ที่ใช้ใน Express นั้นมีหลายตัว แต่ที่นิยมใช้กัน คือ EJS
+
+**Website:** [EJS](https://www.npmjs.com/package/ejs)
+
+**Features**
+- <% %> ใช้สำหรับแทรกโค้ด javascript ลงไปใน .ejs 
+- <%= %> ใช้แสดงค่าที่ส่งมา
+- สร้างไฟล์ .ejs แยกส่วนออกไป เช่น header, footer แล้วนำมา include ในไฟล์ content ได้
+
+#### ตัวอย่างการใช้งาน
+- ติดตั้ง package `npm i -S ejs`
+- เรียกใช้งาน
+```javascript
+import path from 'path';
+import ejs from 'ejs';
+
+// ...
+// view engine setup
+server.set('views', path.join(__dirname, 'views')); // views คือชื่อโฟลเดอร์ที่เก็ย template
+// กำหนด view engine ว่าจะใช้ ejs
+server.set('view engine', 'ejs');
+
+// default route
+server.get('/', (req, res) => {
+  res.render('index');
+});
+
+// ...
+```
+
+- เพิ่มไฟล์ views/index.ejs
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Learning EJS</title>
+</head>
+<body>
+  <h1>Hello EJS</h1>
+</body>
+</html>
+```
+
+- ทดลองรัน [http://localhost:3000/](http://localhost:3000/)
+
+- สามารถส่งค่าจาก express ไปให้ EJS render ได้
+```javascript
+import pets from './../data/pets.json';
+
+
+server.get('/', (req, res) => {
+  res.render('index', {
+    title: 'Learning EJS',
+    pets: pets
+  });
+});
+```
+
+- แก้ไขไฟล์ views/index.ejs
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= title %></title>
+</head>
+<body>
+  <h1>Hello EJS</h1>
+  <div>
+    <% pets.forEach(pet => { %> 
+      <h3>Pet Id: <%= pet.id%> Name: <%= pet.name%> Age: <%= pet.age%></h3>
+    <%})%>
+  </div>
+</body>
+</html>
+```
+
+- ทดลองรัน [http://localhost:3000/](http://localhost:3000/) จะเห็นว่ามีข้อมูลของ pets มาแสดงแล้ว
