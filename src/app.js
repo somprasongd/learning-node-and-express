@@ -2,6 +2,7 @@ import express from 'express';
 import PetRoute from './routes/pets';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
+import path from 'path';
 
 const PORT = 3000;
 
@@ -17,15 +18,20 @@ server.use(morgan('tiny'));
 server.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({extended: true}));
+// serve static contents
+server.use(express.static(path.join(__dirname, 'public')));
 
 // default route
 server.get('/', (req, res) => {
-  console.log('handling GET request...');
-  res.send('Hello from Express');
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 server.get('/greeting', (req, res) => {
   res.send(`Hello ${req.query.name}`);
+});
+
+server.get('/download/images/:imageName', (req, res) => {
+  res.download(path.join(__dirname, 'public', 'images', req.params.imageName));
 });
 
 // routes with router

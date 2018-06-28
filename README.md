@@ -413,3 +413,42 @@ server.get('/greeting', (req, res) => {
   res.send(`Hello ${req.query.name}`);
 });
 ```
+
+### 3.8 Serving static content
+ใช้ middleware `server.use(express.static(path.join(__dirname, 'public'));` ซึ่ง src/public คือ ชื่อโฟลเดอร์ที่จะเก็บ static contents ซึ่งเวลาเรียกผ่าน URL ไม่ต้องใส่ src/public เข้าไปด้วย
+
+#### ตัวอย่างการใช้งาน
+```javascript
+// ...
+// __dirname คือ ตำแหน่ง dir ของไฟล์ที่เรียกใช้
+server.use(express.static(path.join(__dirname, 'public')));
+// ...
+```
+- ทำสอบเรียกไปที่ [http://localhost:3000/images/doggy.jpg](http://localhost:3000/images/doggy.jpg) จะเห็นว่าหน้า browser จะแสดงรูปออกมาแล้ว
+
+- ถ้าต้องการกำหนด path ของ static content สามารถทำได้เหมือนการใช้ Router เช่น ถ้าต้องการเรียกใช้ผ่าน path `/static/images/doggy.jpg`
+
+```javascript
+// ...
+server.use('static', express.static(path.join(__dirname, 'public')));
+// ...
+```
+
+#### ตัวอย่างการให้ download file จาก static folder
+```javascript
+server.get('/download/images/:imageName', (req, res) => {
+  res.download(path.join(__dirname, 'public', 'images', req.params.imageName));
+});
+```
+
+- ทดสอบเรียก [http://localhost:3000/download/images/doggy.jpg](http://localhost:3000/download/images/doggy.jpg)
+
+#### ตัวอย่างแสดงหน้า index.html
+```javascript
+server.get('/', (req, res) => {
+  // เพื่อส่ง index.html กลับไปทำงานที่ browser
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+```
+
+- ทดสอบเรียก [http://localhost:3000](http://localhost:3000)
