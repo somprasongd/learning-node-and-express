@@ -4,6 +4,8 @@ import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import path from 'path';
 
+import pets from './../data/pets.json';
+
 const PORT = 3000;
 const ROOT_DIR = path.parse(__dirname).dir;
 
@@ -22,17 +24,17 @@ server.use(bodyParser.urlencoded({extended: true}));
 // serve static contents
 server.use(express.static(path.join(ROOT_DIR, 'public')));
 
+// view engine setup
+server.set('views', path.join(ROOT_DIR, 'views'));
+// use ejs for view engine
+server.set('view engine', 'ejs');
+
 // default route
 server.get('/', (req, res) => {
-  res.sendFile(path.join(ROOT_DIR, 'public', 'index.html'));
-});
-
-server.get('/greeting', (req, res) => {
-  res.send(`Hello ${req.query.name}`);
-});
-
-server.get('/download/images/:imageName', (req, res) => {
-  res.download(path.join(ROOT_DIR, 'public', 'images', req.params.imageName));
+  res.render('index', {
+    title: 'Learning EJS',
+    pets: pets
+  });
 });
 
 // routes with router
