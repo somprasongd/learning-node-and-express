@@ -24,6 +24,10 @@ server.get('/', (req, res) => {
   res.send('Hello from Express');
 });
 
+server.get('/greeting', (req, res) => {
+  res.send(`Hello ${req.query.name}`);
+});
+
 // routes with router
 server.use(PETS_BASE_URL, PetRoute);
 
