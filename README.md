@@ -361,3 +361,46 @@ server.use(PETS_BASE_URL, PetRoute);
 
 // ...
 ```
+
+### 3.6 Boby parser
+เป็น middleware ที่เอาไว้แปลง request body message ไปเป็น Javascript object (`req.body`)
+
+website: [body-parser](https://www.npmjs.com/package/body-parser)
+
+- ติดตั้ง package `npm i -S body-parser`
+- เรียกใช้งาน
+```javascript
+import body-parser from 'body-parser'
+
+// ...
+server.use(morgan('tiny'));
+// ไว้หลัง morgan
+// parse application/json
+server.use(bodyParser.json());
+// parse application/x-www-form-urlencoded
+server.use(bodyParser.urlencoded({extended: true}));
+
+// ...
+```
+
+- แก้ไขไฟล์ src/routes/pets.js เพื่อทดสอบเพิ่มสัตว์เลี้ยงตัวใหม่
+```javascript
+router.post('/', (req, res) => {
+  // เอาเฉพาะ name กับ age ออกมาจาก req.body
+  const {name, age} = req.body;
+  // เพิ่มลงไปใน array
+  pets.push({id: pets[pets.length - 1].id + 1, ...{name, age}});
+  // ส่งรายการที่เพิ่มใหม่กลับไปยัง client พร้อมสถานะเป็น 201
+  res.status(201).json(pets[pets.length - 1]);
+});
+```
+
+- ทดสอบ
+```bash
+curl -X POST \
+ -H "Content-Type: application/json" \
+ -d '{"name":"dogdog", "age":1}' \
+ http://localhost:3000/api/v1/pets
+```
+
+- จะได้ผลลัพธ์กลับมาว่า `{"id":4,"name":"dogdog","age":1}`

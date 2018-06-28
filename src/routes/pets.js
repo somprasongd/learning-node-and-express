@@ -24,8 +24,9 @@ router.get(`/:petId`, (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log('handling POST request...');
-  res.end();
+  const {name, age} = req.body;
+  pets.push({id: pets[pets.length - 1].id + 1, ...{name, age}})
+  res.status(201).json(pets[pets.length - 1]);
 });
 
 router.patch('/', (req, res) => {
