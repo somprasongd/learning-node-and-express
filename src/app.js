@@ -11,7 +11,10 @@ const buildUrl = (version, path) => `/api/${version}/${path}`;
 const PETS_BASE_URL = buildUrl('v1', 'pets');
 
 // use middlewares
-server.use(morgan('tiny'));
+// use in development mode only
+if (process.env.NODE_ENV === 'development') {
+  server.use(morgan('tiny'));
+}
 
 // default route
 server.get('/', (req, res) => {
