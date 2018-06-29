@@ -32,11 +32,6 @@ server.set('views', path.join(ROOT_DIR, 'views'));
 // use ejs for view engine
 server.set('view engine', 'ejs');
 
-// view engine setup
-server.set('views', path.join(__dirname, 'views'));
-// use ejs for view engine
-server.set('view engine', 'ejs');
-
 // default route
 server.get('/', (req, res) => {
   res.render('index', {
