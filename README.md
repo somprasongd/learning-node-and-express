@@ -492,7 +492,8 @@ server.get('/', (req, res) => {
 - <%= %> ใช้แสดงค่าที่ส่งมา
 - สร้างไฟล์ .ejs แยกส่วนออกไป เช่น header, footer แล้วนำมา include ในไฟล์ content ได้
 
-#### ตัวอย่างการใช้งาน
+#### 3.9.1 การใช้งาน EJS
+
 - ติดตั้ง package `npm i -S ejs`
 - เรียกใช้งาน
 ```javascript
@@ -566,3 +567,28 @@ server.get('/', (req, res) => {
 ```
 
 - ทดลองรัน [http://localhost:3000/](http://localhost:3000/) จะเห็นว่ามีข้อมูลของ pets มาแสดงแล้ว
+
+#### 3.9.2 การใช้ boostrap กับ EJS
+:on: step-015-tempate-ejs-part-2
+
+- ก็ทำเหมือน HTML ปกติ โดยการแทรก โค้ดนี้ไว้ที่ `<head></head>`
+```html
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+```
+
+- เรียกใช้ class ของ boostrap
+```html
+<body>
+  <h1>Pets List by EJS</h1>
+  <div class="container"> <!-- ตรงนี้ -->
+    <% pets.forEach(pet => { %> 
+      <h3>Pet Id: <%= pet.id%> Name: <%= pet.name%> Age: <%= pet.age%></h3>
+    <%})%>
+  </div>
+</body>
+```
+
+- ลองรีเฟรชหน้าเวบ จะพบว่าสามารถใช้งาน boostrap ได้แล้ว
+
