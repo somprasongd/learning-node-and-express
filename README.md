@@ -419,9 +419,12 @@ server.get('/greeting', (req, res) => {
 
 #### ตัวอย่างการใช้งาน
 ```javascript
-// ...
 // __dirname คือ ตำแหน่ง dir ของไฟล์ที่เรียกใช้
-server.use(express.static(path.join(__dirname, 'public')));
+// แต่ public อยู่ขึ้นไปอีก 1 level จึงต้องขยับขึ้นไป 1 ขั้น
+const ROOT_DIR = path.parse(__dirname).dir;
+
+// ...
+server.use(express.static(path.join(ROOT_DIR, 'public')));
 // ...
 ```
 - ทำสอบเรียกไปที่ [http://localhost:3000/images/doggy.jpg](http://localhost:3000/images/doggy.jpg) จะเห็นว่าหน้า browser จะแสดงรูปออกมาแล้ว
@@ -430,14 +433,14 @@ server.use(express.static(path.join(__dirname, 'public')));
 
 ```javascript
 // ...
-server.use('static', express.static(path.join(__dirname, 'public')));
+server.use('static', express.static(path.join(ROOT_DIR, 'public')));
 // ...
 ```
 
 #### ตัวอย่างการให้ download file จาก static folder
 ```javascript
 server.get('/download/images/:imageName', (req, res) => {
-  res.download(path.join(__dirname, 'public', 'images', req.params.imageName));
+  res.download(path.join(ROOT_DIR, 'public', 'images', req.params.imageName));
 });
 ```
 
@@ -447,7 +450,7 @@ server.get('/download/images/:imageName', (req, res) => {
 ```javascript
 server.get('/', (req, res) => {
   // เพื่อส่ง index.html กลับไปทำงานที่ browser
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(ROOT_DIR, 'public', 'index.html'));
 });
 ```
 

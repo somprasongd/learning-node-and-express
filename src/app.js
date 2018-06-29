@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import path from 'path';
 
 const PORT = 3000;
+const ROOT_DIR = path.parse(__dirname).dir;
 
 const server = express();
 
@@ -19,11 +20,11 @@ server.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({extended: true}));
 // serve static contents
-server.use(express.static(path.join(__dirname, 'public')));
+server.use(express.static(path.join(ROOT_DIR, 'public')));
 
 // default route
 server.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(ROOT_DIR, 'public', 'index.html'));
 });
 
 server.get('/greeting', (req, res) => {
@@ -31,7 +32,7 @@ server.get('/greeting', (req, res) => {
 });
 
 server.get('/download/images/:imageName', (req, res) => {
-  res.download(path.join(__dirname, 'public', 'images', req.params.imageName));
+  res.download(path.join(ROOT_DIR, 'public', 'images', req.params.imageName));
 });
 
 // routes with router
