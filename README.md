@@ -1,6 +1,8 @@
 # LEARNING NODE AND EXPRESS
 
 ## 1. Nodejs & ES6
+:on: step-001-setup-babel-part-1
+
 ต้องติดตั้ง babel ช่วยในการเขียน ES6 (จริงๆ nodejs เขียน es6 ได้ แต่ยังใช้ import ไม่ได้)
 
 - เริ่มจากติดตั้ง module ตามนี้
@@ -23,7 +25,7 @@ npm i -D babel-cli babel-preset-env babel-preset-stage-0
 ```json
 {
   "scripts": {
-    "start": "node ./app.js --exec babel-node -e js"
+    "start": "node src/app.js --exec babel-node -e js"
   }
 }
 
@@ -38,10 +40,12 @@ console.log(`Hello ${name}`);
 - ลองรันจากคำสั่ง `npm start` จะเห็นว่าสามารถใช้งานได้
 
 ### 1.1 การใช้ babel compile เป็น ES5
+:on: step-002-setup-babel-part-2
+
 - แก้ไข scripts ใน package.json โดย build สำหรับ compile และ serve สำหรับรันไฟล์ที่ compile แล้ว
-```
+```json
  "scripts": {
-    "start": "nodemon lib/index.js --exec babel-node -e js",
+    "start": "node src/app.js --exec babel-node -e js",
     "clean": "rm -rf dist",
     "build": "npm run clean && mkdir dist && babel src -s -d dist", # -s สำหรับสร้าง source map
     "serve": "node dist/app.js"
@@ -100,8 +104,9 @@ require('./../dist/app');
     "prod": "SET ENV=production && npm run build && node bin/prod"
   },
 ```
-
 ## 2. Use nodemon
+:on: step-003-use-nodemon
+
 ใช้เพื่อให้ช่วยรัน node ใหม่ทุกครั้งที่มีการแก้ไขไฟล์
 
 - เริ่มจากติดตั้ง nodemon
@@ -124,6 +129,7 @@ npm i -D nodemon
 ## 3. Express
 
 ### 3.1 การติดตั้ง
+:on: step-004-use-express
 
 - ใช้คำสั่ง `npm i -S express`
 - สร้าง server ด้วย express
@@ -141,7 +147,10 @@ server.listen(PORT, () => console.log(`Server start on port ${PORT}`));
 - ที่ console จะแสดงคำว่า "Server start on port 3000" และเมื่อเปิดผ่าน browser ที่ http://127.0.0.1:3000 จะแสดงว่า "Cannot GET /" แสดงว่าโค้ดทำงานได้ถูกต้อง
 
 ### 3.2 Express Route
+:on: step-005-express-route-basic
+
 เราสามารถใช้ Express จัดการกับ HTTP Request ได้ด้วยการใช้งาน Express route
+
 - Method GET ใช้สำหรับร้องขอข้อมูล
 ```js
 server.get('/', (req, res) => {
@@ -189,6 +198,7 @@ server.delete(PETS_BASE_URL, (req, res) => {
 ```
 
 #### app.route()
+:on: step-006-express-route-handler
 
 กรณีที่มี path เดียวกัน และต้องการทำงานหลาย methods แต่ไม่ใช่ทุก methods (`app.all()`) จะใช้ `app.route()` สร้าง chain ต่อไปเรื่อยๆ เช่น 
 
@@ -216,6 +226,8 @@ server.route(PETS_BASE_URL)
 ```
 
 ### 3.3 Path parameters
+:on: step-007-express-path-parameter
+
 เราสามารถส่ง parameter ไปกับ path ที่เรียกไปได้ โดยใช้ `:paramName` และเรียกใช้งานผ่าน `req.params`
 
 ```
@@ -228,7 +240,7 @@ req.params: { "petId": "1" }
 ```javascript
 server.get(`${PETS_BASE_URL}/:petId`, (req, res) => {
   const pet = pets.find(pet => {
-    return pet.id.toString() === req.params.petId;
+    return pet.id === +req.params.petId;
   });
   if (!pet) {
     res.send(`Pet with id ${req.params.petId} not found.`);
