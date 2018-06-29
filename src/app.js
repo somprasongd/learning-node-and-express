@@ -2,4 +2,4 @@ import test from './test';
 
 test();
 
-console.log(`Hello from "${process.env.ENV}" environtment.`);
+console.log(`Hello from "${process.env.NODE_ENV}" environtment.`);

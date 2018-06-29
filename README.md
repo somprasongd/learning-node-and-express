@@ -23,7 +23,7 @@ npm i -D babel-cli babel-preset-env babel-preset-stage-0
 ```json
 {
   "scripts": {
-    "start": "node ./app.js --exec babel-node -e js"
+    "start": "node src/app.js --exec babel-node -e js"
   }
 }
 
@@ -39,9 +39,9 @@ console.log(`Hello ${name}`);
 
 ### การใช้ babel compile เป็น ES5
 - แก้ไข scripts ใน package.json โดย build สำหรับ compile และ serve สำหรับรันไฟล์ที่ compile แล้ว
-```
+```json
  "scripts": {
-    "start": "nodemon lib/index.js --exec babel-node -e js",
+    "start": "node src/app.js --exec babel-node -e js",
     "clean": "rm -rf dist",
     "build": "npm run clean && mkdir dist && babel src -s -d dist", # -s สำหรับสร้าง source map
     "serve": "node dist/app.js"
