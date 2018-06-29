@@ -226,6 +226,8 @@ server.route(PETS_BASE_URL)
 ```
 
 ### 3.3 Path parameters
+:on: step-007-express-path-parameter
+
 เราสามารถส่ง parameter ไปกับ path ที่เรียกไปได้ โดยใช้ `:paramName` และเรียกใช้งานผ่าน `req.params`
 
 ```
