@@ -240,7 +240,7 @@ req.params: { "petId": "1" }
 ```javascript
 server.get(`${PETS_BASE_URL}/:petId`, (req, res) => {
   const pet = pets.find(pet => {
-    return pet.id.toString() === req.params.petId;
+    return pet.id === +req.params.petId;
   });
   if (!pet) {
     res.send(`Pet with id ${req.params.petId} not found.`);
