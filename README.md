@@ -592,3 +592,76 @@ server.get('/', (req, res) => {
 
 - ลองรีเฟรชหน้าเวบ จะพบว่าสามารถใช้งาน boostrap ได้แล้ว
 
+#### 3.9.3 การใช้ boostrap กับ EJS
+:on: step-015-tempate-ejs-part-2
+
+โดยปกติเราจะมีหน้าเพจมากกว่า 1 หน้า อยู่แล้ว เช่น มีหน้า about.ejs
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title><%= title %></title>
+</head>
+<body>
+  <h1>About Page</h1>
+</body>
+</html>
+```
+
+จะสังเกตว่า จะมีส่วนของโค้ดที่ซ้ำๆ ในทุกหน้า ซึ่งเราสามารถแยกส่วนที่ซ้ำๆ ออกเป็นไฟล์เล็กๆ ได้ แล้วค่อยเรียกเข้ามาประกอบกันเป็นหน้าเพจใหม่ โดยใช้ `<% include [EJS filename] %>`
+
+**ตัวอย่าง**
+- สร้างไฟล์ EJS Partials footer.ejs, head.ejs, nav.ejs ไว้ใน views/partials
+
+```html
+<!-- views/partials/head.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- CSS (load bootstrap from a CDN) -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title><%= title %></title>
+</head>
+<body>
+```
+
+```html
+<!-- views/partials/nav.ejs -->
+
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+  
+      <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+              <span class="glyphicon glyphicon glyphicon-tree-deciduous"></span>
+              EJS Is Fun
+          </a>
+  
+          <ul class="nav navbar-nav">
+              <li><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+          </ul>
+      </div>
+  
+  </div>
+  </nav>
+```
+
+```html
+<!-- views/partials/footer.ejs -->
+  <p class="text-center text-muted">© Copyright 2018 Somprasongd</p>
+</body>
+</html>
+```
+
+- ย้ายไฟล์ index.ejs ไปใน views/partials/pages
+
+- สร้างไฟล์ views/partials/pages/about.ejs

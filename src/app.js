@@ -34,9 +34,15 @@ server.set('view engine', 'ejs');
 
 // default route
 server.get('/', (req, res) => {
-  res.render('index', {
+  res.render('pages/index', {
     title: 'Learning EJS',
     pets: pets
+  });
+});
+
+server.get('/about', (req, res) => {
+  res.render('pages/about', {
+    title: 'Learning EJS'
   });
 });
 
