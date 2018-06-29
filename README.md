@@ -426,6 +426,8 @@ curl -X POST \
 - จะได้ผลลัพธ์กลับมาว่า `{"id":4,"name":"dogdog","age":1}`
 
 ### 3.7 Query String
+:on: step-012-query-string
+
 Express สามารถดึงค่าที่ส่งมาทาง query string ได้ผ่าน `req.query`
 - ตัวอย่างการใช้งาน เมื่อเรียกไปที่ http://localhost:3000/greeting/?name=stamp
 ```javascript
