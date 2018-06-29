@@ -6,7 +6,10 @@ const PORT = 3000;
 
 const server = express();
 
-server.use(morgan('tiny'));
+// use in development mode only
+if (process.env.NODE_ENV === 'development') {
+  server.use(morgan('tiny'));
+}
 
 server.get('/', (req, res) => {
   console.log('handling GET request...');

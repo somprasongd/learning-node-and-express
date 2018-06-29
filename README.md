@@ -277,6 +277,7 @@ server.use((req, res, next) => {
 ```
 
 #### ใช้ morgan เพื่อเก็บ log แต่ละ request
+:on: step-009-express-middleware-part-2
 
 - ติดตั้ง `npm i -S morgan`
 
@@ -286,13 +287,16 @@ import morgan from 'morgan';
 // ...
 const server = express();
 
-server.use(morgan('tiny'));
+// use in development mode only
+if (process.env.NODE_ENV === 'development') {
+  server.use(morgan('tiny'));
+}
 // ...
 ```
 
 #### More middlewares
 - cors - enable CORS
-- helmet
+- helmet - security
 - boby-parser - boby parsing middleware
 - multer - middleware for handing multipart/form-data
 - session
