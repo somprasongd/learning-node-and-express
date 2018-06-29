@@ -1,6 +1,8 @@
 # LEARNING NODE AND EXPRESS
 
 ## 1. Nodejs & ES6
+:on: step-001-setup-babel-part-1
+
 ต้องติดตั้ง babel ช่วยในการเขียน ES6 (จริงๆ nodejs เขียน es6 ได้ แต่ยังใช้ import ไม่ได้)
 
 - เริ่มจากติดตั้ง module ตามนี้
@@ -23,7 +25,7 @@ npm i -D babel-cli babel-preset-env babel-preset-stage-0
 ```json
 {
   "scripts": {
-    "start": "node ./app.js --exec babel-node -e js"
+    "start": "node src/app.js --exec babel-node -e js"
   }
 }
 
@@ -38,10 +40,12 @@ console.log(`Hello ${name}`);
 - ลองรันจากคำสั่ง `npm start` จะเห็นว่าสามารถใช้งานได้
 
 ### 1.1 การใช้ babel compile เป็น ES5
+:on: step-002-setup-babel-part-2
+
 - แก้ไข scripts ใน package.json โดย build สำหรับ compile และ serve สำหรับรันไฟล์ที่ compile แล้ว
-```
+```json
  "scripts": {
-    "start": "nodemon lib/index.js --exec babel-node -e js",
+    "start": "node src/app.js --exec babel-node -e js",
     "clean": "rm -rf dist",
     "build": "npm run clean && mkdir dist && babel src -s -d dist", # -s สำหรับสร้าง source map
     "serve": "node dist/app.js"
@@ -100,8 +104,9 @@ require('./../dist/app');
     "prod": "SET ENV=production && npm run build && node bin/prod"
   },
 ```
-
 ## 2. Use nodemon
+:on: step-003-use-nodemon
+
 ใช้เพื่อให้ช่วยรัน node ใหม่ทุกครั้งที่มีการแก้ไขไฟล์
 
 - เริ่มจากติดตั้ง nodemon
@@ -124,6 +129,7 @@ npm i -D nodemon
 ## 3. Express
 
 ### 3.1 การติดตั้ง
+:on: step-004-use-express
 
 - ใช้คำสั่ง `npm i -S express`
 - สร้าง server ด้วย express
@@ -141,7 +147,10 @@ server.listen(PORT, () => console.log(`Server start on port ${PORT}`));
 - ที่ console จะแสดงคำว่า "Server start on port 3000" และเมื่อเปิดผ่าน browser ที่ http://127.0.0.1:3000 จะแสดงว่า "Cannot GET /" แสดงว่าโค้ดทำงานได้ถูกต้อง
 
 ### 3.2 Express Route
+:on: step-005-express-route-basic
+
 เราสามารถใช้ Express จัดการกับ HTTP Request ได้ด้วยการใช้งาน Express route
+
 - Method GET ใช้สำหรับร้องขอข้อมูล
 ```js
 server.get('/', (req, res) => {
@@ -189,6 +198,7 @@ server.delete(PETS_BASE_URL, (req, res) => {
 ```
 
 #### app.route()
+:on: step-006-express-route-handler
 
 กรณีที่มี path เดียวกัน และต้องการทำงานหลาย methods แต่ไม่ใช่ทุก methods (`app.all()`) จะใช้ `app.route()` สร้าง chain ต่อไปเรื่อยๆ เช่น 
 
@@ -216,6 +226,8 @@ server.route(PETS_BASE_URL)
 ```
 
 ### 3.3 Path parameters
+:on: step-007-express-path-parameter
+
 เราสามารถส่ง parameter ไปกับ path ที่เรียกไปได้ โดยใช้ `:paramName` และเรียกใช้งานผ่าน `req.params`
 
 ```
@@ -228,7 +240,7 @@ req.params: { "petId": "1" }
 ```javascript
 server.get(`${PETS_BASE_URL}/:petId`, (req, res) => {
   const pet = pets.find(pet => {
-    return pet.id.toString() === req.params.petId;
+    return pet.id === +req.params.petId;
   });
   if (!pet) {
     res.send(`Pet with id ${req.params.petId} not found.`);
@@ -239,6 +251,7 @@ server.get(`${PETS_BASE_URL}/:petId`, (req, res) => {
 ```
 
 ### 3.4 Middleware
+:on: step-008-express-middleware
 
 Express สามารถสร้าง middleware เพื่อให้ทำงานแบบ FIFO (First-In-First-Out)
 
@@ -264,6 +277,7 @@ server.use((req, res, next) => {
 ```
 
 #### ใช้ morgan เพื่อเก็บ log แต่ละ request
+:on: step-009-express-middleware-part-2
 
 - ติดตั้ง `npm i -S morgan`
 
@@ -273,13 +287,16 @@ import morgan from 'morgan';
 // ...
 const server = express();
 
-server.use(morgan('tiny'));
+// use in development mode only
+if (process.env.NODE_ENV === 'development') {
+  server.use(morgan('tiny'));
+}
 // ...
 ```
 
 #### More middlewares
 - cors - enable CORS
-- helmet
+- helmet - security
 - boby-parser - boby parsing middleware
 - multer - middleware for handing multipart/form-data
 - session
@@ -290,6 +307,7 @@ server.use(morgan('tiny'));
 - merror
 
 ### 3.5 Router
+:on: step-010-express-router
 
 เนื่องจาก Nodejs สามารถสร้างโปรแกรมแบบ Modular ได้ ดังนั้นเราสามารถสร้างไฟล์แยกออกไปใช้ router จัดการกับ method, path ต่างๆ แล้วใช้ middleware โหลดเข้ามา
 
@@ -363,6 +381,8 @@ server.use(PETS_BASE_URL, PetRoute);
 ```
 
 ### 3.6 Boby parser
+:on: step-011-body-parser
+
 เป็น middleware ที่เอาไว้แปลง request body message ไปเป็น Javascript object (`req.body`)
 
 website: [body-parser](https://www.npmjs.com/package/body-parser)
@@ -406,6 +426,8 @@ curl -X POST \
 - จะได้ผลลัพธ์กลับมาว่า `{"id":4,"name":"dogdog","age":1}`
 
 ### 3.7 Query String
+:on: step-012-query-string
+
 Express สามารถดึงค่าที่ส่งมาทาง query string ได้ผ่าน `req.query`
 - ตัวอย่างการใช้งาน เมื่อเรียกไปที่ http://localhost:3000/greeting/?name=stamp
 ```javascript
@@ -415,6 +437,8 @@ server.get('/greeting', (req, res) => {
 ```
 
 ### 3.8 Serving static content
+:on: step-013-serving-static-content
+
 ใช้ middleware `server.use(express.static(path.join(__dirname, 'public'));` ซึ่ง src/public คือ ชื่อโฟลเดอร์ที่จะเก็บ static contents ซึ่งเวลาเรียกผ่าน URL ไม่ต้องใส่ src/public เข้าไปด้วย
 
 #### ตัวอย่างการใช้งาน
