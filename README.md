@@ -118,7 +118,7 @@ npm i -D nodemon
 ```json
 {
   "scripts": {
-    "start": "nodemon ./app.js --exec babel-node -e js"
+    "start": "nodemon bin/dev",
   }
 }
 ```
