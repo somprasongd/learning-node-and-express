@@ -16,13 +16,16 @@ const buildUrl = (version, path) => `/api/${version}/${path}`;
 const PETS_BASE_URL = buildUrl('v1', 'pets');
 
 // use middlewares
-server.use(morgan('tiny'));
 // parse application/json
 server.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({extended: true}));
 // serve static contents
 server.use(express.static(path.join(ROOT_DIR, 'public')));
+// use in development mode only
+if (process.env.NODE_ENV === 'development') {
+  server.use(morgan('tiny'));
+}
 
 // view engine setup
 server.set('views', path.join(ROOT_DIR, 'views'));
