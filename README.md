@@ -481,6 +481,8 @@ server.get('/', (req, res) => {
 - ทดสอบเรียก [http://localhost:3000](http://localhost:3000)
 
 ### 3.9 Template Engines - EJS
+:on: step-014-template-ejs
+
 การแสดงหน้าเวบเพจ ปกติข้อมูลมันไม่ได้เป็น static แต่มันจะแสดงข้อมูลแบบ dynamic ดังนั้น จะใช้วิธีทำการสร้าง template เอาไว้ แล้วใช้ res.render('view'); เพื่อ render HTML ไฟล์ และส่งไปกับ response กลับไปยัง browser ซึ่ง Template Engines ที่ใช้ใน Express นั้นมีหลายตัว แต่ที่นิยมใช้กัน คือ EJS
 
 **Website:** [EJS](https://www.npmjs.com/package/ejs)

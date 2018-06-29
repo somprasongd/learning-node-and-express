@@ -11,7 +11,7 @@
     "prod": "SET NODE_ENV=production && npm run build && node bin/prod"
   },
   "keywords": [],
-  "author": "",
+  "author": "Somprasong Damyos",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
