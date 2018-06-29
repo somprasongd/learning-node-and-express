@@ -1,11 +1,8 @@
 # LEARNING NODE AND EXPRESS
 
 ## 1. Nodejs & ES6
-<<<<<<< HEAD
 :on: step-001-setup-babel-part-1
 
-=======
->>>>>>> 4c82bb026e4d0dd9c9fca2be08e1dbafd818c8d6
 ต้องติดตั้ง babel ช่วยในการเขียน ES6 (จริงๆ nodejs เขียน es6 ได้ แต่ยังใช้ import ไม่ได้)
 
 - เริ่มจากติดตั้ง module ตามนี้
@@ -107,14 +104,9 @@ require('./../dist/app');
     "prod": "SET ENV=production && npm run build && node bin/prod"
   },
 ```
-<<<<<<< HEAD
 ## 2. Use nodemon
 :on: step-003-use-nodemon
 
-=======
-
-## 2. Use nodemon
->>>>>>> 4c82bb026e4d0dd9c9fca2be08e1dbafd818c8d6
 ใช้เพื่อให้ช่วยรัน node ใหม่ทุกครั้งที่มีการแก้ไขไฟล์
 
 - เริ่มจากติดตั้ง nodemon
