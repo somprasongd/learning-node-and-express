@@ -1,13 +1,23 @@
 <!-- views/pages/index.ejs -->
-<% include ../partials/head %>
+<!DOCTYPE html>
+<html lang="en">
+  <% include ../partials/head %>
+  <body>
+    <% include ../partials/nav %>
+    <div class="container">
+      <h2>Home Page</h2>
+      <ul class="list-group">
+        <% pets.forEach(pet => { %>
+          <li class="list-group-item">Pet Id:
+            <%= pet.id%> Name:
+              <%= pet.name%> Age:
+                <%= pet.age%>
+          </li>
+        <%})%>
+        </ul>      
+    </div>
+    <% include ../partials/footer %>
+    <% include ../partials/scripts %>
+  </body>
 
-<main>
-  <h1>Pets List by EJS</h1>
-  <div class="container">
-    <% pets.forEach(pet => { %> 
-      <h3>Pet Id: <%= pet.id%> Name: <%= pet.name%> Age: <%= pet.age%></h3>
-    <%})%>
-  </div>
-</main>
-
-<% include ../partials/footer %>
+</html>
